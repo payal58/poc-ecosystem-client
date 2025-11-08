@@ -76,12 +76,15 @@ export default function AdminOrganizationsPage() {
                 <thead className="bg-gray-50 dark:bg-gray-900">
                   <tr>
                     <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Business Name
+                      Organization Name
                     </th>
                     <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Industry
+                      Sector Type
                     </th>
                     <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      City
+                    </th>
+                    <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Email
                     </th>
                     <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -94,24 +97,40 @@ export default function AdminOrganizationsPage() {
                     <tr key={org.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       <td className="px-3 sm:px-6 py-4">
                         <div className="text-sm font-medium text-gray-900 dark:text-white">
-                          {org.business_name}
+                          {org.organization_name || 'Unnamed Organization'}
                         </div>
                         <div className="sm:hidden mt-1">
-                          <span className="inline-block px-2 py-1 text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full mr-2">
-                            {org.industry || 'N/A'}
-                          </span>
-                          <span className="text-xs text-gray-600 dark:text-gray-400">
-                            {org.email || 'N/A'}
-                          </span>
+                          {org.sector_type && (
+                            <span className="inline-block px-2 py-1 text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full mr-2">
+                              {org.sector_type}
+                            </span>
+                          )}
+                          {org.city && (
+                            <span className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full mr-2">
+                              {org.city}
+                            </span>
+                          )}
+                          {org.email_address && (
+                            <span className="text-xs text-gray-600 dark:text-gray-400 block mt-1">
+                              {org.email_address}
+                            </span>
+                          )}
                         </div>
                       </td>
                       <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 py-1 text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full">
-                          {org.industry || 'N/A'}
-                        </span>
+                        {org.sector_type ? (
+                          <span className="px-2 py-1 text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full">
+                            {org.sector_type}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-gray-400 dark:text-gray-500">-</span>
+                        )}
                       </td>
                       <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                        {org.email || 'N/A'}
+                        {org.city || '-'}
+                      </td>
+                      <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                        {org.email_address || '-'}
                       </td>
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end gap-2">

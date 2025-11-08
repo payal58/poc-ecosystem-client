@@ -3,8 +3,12 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { organizationsApi } from '@/lib/api'
 import { Building2, Mail, Globe, ArrowLeft, MapPin, Phone, Briefcase, TrendingUp, CheckCircle, ExternalLink } from 'lucide-react'
+
+// Dynamically import Map component to avoid SSR issues
+const Map = dynamic(() => import('@/components/Map'), { ssr: false })
 
 export default function OrganizationDetailPage() {
   const params = useParams()
@@ -74,26 +78,22 @@ export default function OrganizationDetailPage() {
               <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4">
                 <div className="flex-1">
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                    {organization.business_name}
+                    {organization.organization_name || 'Unnamed Organization'}
                   </h1>
                   <div className="flex flex-wrap gap-2 mb-3">
-                    {organization.industry && (
+                    {organization.sector_type && (
                       <span className="inline-block px-3 py-1 text-sm bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full">
-                        {organization.industry}
+                        {organization.sector_type}
                       </span>
                     )}
-                    {organization.business_stage && (
+                    {organization.city && (
                       <span className="inline-block px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
-                        {organization.business_stage}
+                        {organization.city}
                       </span>
                     )}
-                    {organization.business_status && (
-                      <span className={`inline-block px-3 py-1 text-sm rounded-full ${
-                        organization.business_status === 'Active'
-                          ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                          : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
-                      }`}>
-                        {organization.business_status}
+                    {organization.province_state && (
+                      <span className="inline-block px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 rounded-full">
+                        {organization.province_state}
                       </span>
                     )}
                   </div>
@@ -101,13 +101,24 @@ export default function OrganizationDetailPage() {
               </div>
             </div>
 
-            {organization.description && (
+            {organization.services_offered && (
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  About
+                  Services Offered
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
-                  {organization.description}
+                  {organization.services_offered}
+                </p>
+              </div>
+            )}
+            
+            {organization.notes && (
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                  Notes
+                </h2>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+                  {organization.notes}
                 </p>
               </div>
             )}
@@ -119,32 +130,54 @@ export default function OrganizationDetailPage() {
                   Business Information
                 </h2>
                 
-                {organization.business_location && (
+                {organization.address && (
                   <div className="flex items-start">
                     <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Location</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.business_location}</p>
+                      <p className="font-medium text-gray-900 dark:text-white mb-1">Address</p>
+                      <p className="text-gray-600 dark:text-gray-300">{organization.address}</p>
                     </div>
                   </div>
                 )}
 
-                {organization.business_sector && (
+                {organization.city && (
+                  <div className="flex items-start">
+                    <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white mb-1">City</p>
+                      <p className="text-gray-600 dark:text-gray-300">{organization.city}</p>
+                    </div>
+                  </div>
+                )}
+
+                {organization.province_state && (
+                  <div className="flex items-start">
+                    <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white mb-1">Province/State</p>
+                      <p className="text-gray-600 dark:text-gray-300">{organization.province_state}</p>
+                    </div>
+                  </div>
+                )}
+
+                {organization.sector_type && (
                   <div className="flex items-start">
                     <Briefcase className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Business Sector</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.business_sector}</p>
+                      <p className="font-medium text-gray-900 dark:text-white mb-1">Sector Type</p>
+                      <p className="text-gray-600 dark:text-gray-300">{organization.sector_type}</p>
                     </div>
                   </div>
                 )}
 
-                {organization.legal_structure && (
+                {(organization.latitude && organization.longitude) && (
                   <div className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Legal Structure</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.legal_structure}</p>
+                      <p className="font-medium text-gray-900 dark:text-white mb-1">Coordinates</p>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        {organization.latitude}, {organization.longitude}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -156,17 +189,27 @@ export default function OrganizationDetailPage() {
                   Contact Information
                 </h2>
 
-                {organization.email && (
+                {organization.email_address && (
                   <div className="flex items-start">
                     <Mail className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-medium text-gray-900 dark:text-white mb-1">Email</p>
                       <a
-                        href={`mailto:${organization.email}`}
+                        href={`mailto:${organization.email_address}`}
                         className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
                       >
-                        {organization.email}
+                        {organization.email_address}
                       </a>
+                    </div>
+                  </div>
+                )}
+
+                {organization.contact_name && (
+                  <div className="flex items-start">
+                    <Mail className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white mb-1">Contact Name</p>
+                      <p className="text-gray-600 dark:text-gray-300">{organization.contact_name}</p>
                     </div>
                   </div>
                 )}
@@ -206,38 +249,34 @@ export default function OrganizationDetailPage() {
               </div>
             </div>
 
-            {/* Social Media */}
-            {organization.social_media && Object.keys(organization.social_media).length > 0 && (
+            {/* Map Section */}
+            {organization.latitude && organization.longitude && (
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  Social Media
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  Location
                 </h2>
-                <div className="flex flex-wrap gap-3">
-                  {Object.entries(organization.social_media).map(([platform, url]) => (
-                    <a
-                      key={platform}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                    >
-                      <span className="mr-2">{platform}</span>
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  ))}
+                <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700" style={{ height: '400px' }}>
+                  <Map
+                    latitude={parseFloat(organization.latitude)}
+                    longitude={parseFloat(organization.longitude)}
+                    organizationName={organization.organization_name || 'Organization'}
+                  />
                 </div>
               </div>
             )}
 
-            {/* Additional Contact Info */}
-            {organization.additional_contact_info && (
+            {/* External Link */}
+            {organization.external_url && (
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  Additional Contact Info
-                </h2>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
-                  {organization.additional_contact_info}
-                </p>
+                <a
+                  href={organization.external_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                >
+                  View on Source Website
+                  <ExternalLink className="h-4 w-4 ml-2" />
+                </a>
               </div>
             )}
           </div>
