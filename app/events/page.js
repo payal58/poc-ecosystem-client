@@ -28,18 +28,40 @@ export default function EventsPage() {
   const fetchEvents = async () => {
     try {
       setLoading(true)
-      const params = {}
-      if (categoryFilter) params.category = categoryFilter
-      if (audienceFilter) params.audience = audienceFilter
-      if (searchTerm) params.search = searchTerm
-
-      const response = await eventsApi.getAll(params)
-      const results = response.data
-      setEvents(results)
       
-      // Extract unique categories and audiences
-      const uniqueCategories = [...new Set(results.map(e => e.category).filter(Boolean))]
-      const uniqueAudiences = [...new Set(results.flatMap(e => e.audience?.split(', ') || []).filter(Boolean))]
+      // Fetch only external events
+      const response = await eventsApi.getExternal()
+      const externalData = response.data
+      let allEvents = externalData?.events || []
+      
+      // Apply client-side filtering if needed
+      if (categoryFilter) {
+        allEvents = allEvents.filter(event => 
+          event.category && event.category.toLowerCase().includes(categoryFilter.toLowerCase())
+        )
+      }
+      
+      if (audienceFilter) {
+        allEvents = allEvents.filter(event => 
+          event.audience && event.audience.toLowerCase().includes(audienceFilter.toLowerCase())
+        )
+      }
+      
+      if (searchTerm) {
+        const searchLower = searchTerm.toLowerCase()
+        allEvents = allEvents.filter(event => 
+          event.title?.toLowerCase().includes(searchLower) ||
+          event.description?.toLowerCase().includes(searchLower) ||
+          event.location?.toLowerCase().includes(searchLower)
+        )
+      }
+      
+      setEvents(allEvents)
+      
+      // Extract unique categories and audiences from all external events (before filtering)
+      const allExternalEvents = externalData?.events || []
+      const uniqueCategories = [...new Set(allExternalEvents.map(e => e.category).filter(Boolean))]
+      const uniqueAudiences = [...new Set(allExternalEvents.flatMap(e => e.audience?.split(', ') || []).filter(Boolean))]
       setCategories(uniqueCategories)
       setAudiences(uniqueAudiences)
 
@@ -48,14 +70,15 @@ export default function EventsPage() {
         try {
           await searchApi.log({ 
             query: searchTerm, 
-            results_count: results.length 
+            results_count: allEvents.length 
           })
         } catch (logError) {
           console.error('Error logging search:', logError)
         }
       }
     } catch (error) {
-      console.error('Error fetching events:', error)
+      console.error('Error fetching external events:', error)
+      setEvents([])
       // Log failed search
       if (searchTerm) {
         try {
@@ -387,12 +410,14 @@ export default function EventsPage() {
                                 ]
                                 const colorClass = colors[eventIndex % colors.length] || 'bg-gradient-to-r from-primary-500 to-primary-600'
                                 
-                                return (
-                                  <Link
-                                    key={event.id}
-                                    href={`/events/${event.id}`}
-                                    className={`block p-1 sm:p-1.5 rounded text-white hover:opacity-90 transition-all cursor-pointer group shadow-sm ${colorClass}`}
-                                  >
+                                // Check if event is external
+                                const isExternal = event.external || event.id?.toString().startsWith('ext_')
+                                const eventUrl = isExternal 
+                                  ? (event.external_url || event.link || '#')
+                                  : `/events/${event.id}`
+                                
+                                const eventContent = (
+                                  <>
                                     <div className="text-[9px] sm:text-[10px] font-medium mb-0.5 opacity-90">
                                       {formatTime(event.start_date)}
                                       {event.end_date && event.end_date !== event.start_date && (
@@ -402,11 +427,31 @@ export default function EventsPage() {
                                     <div className="text-[9px] sm:text-[10px] font-semibold line-clamp-2 leading-tight group-hover:underline">
                                       {event.title}
                                     </div>
-                                    {event.link && (
+                                    {(event.link || event.external_url) && (
                                       <div className="flex items-center justify-end mt-0.5">
                                         <Wifi className="h-2 sm:h-2.5 w-2 sm:w-2.5 opacity-75" />
                                       </div>
                                     )}
+                                  </>
+                                )
+                                
+                                return isExternal ? (
+                                  <a
+                                    key={event.id}
+                                    href={eventUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`block p-1 sm:p-1.5 rounded text-white hover:opacity-90 transition-all cursor-pointer group shadow-sm ${colorClass}`}
+                                  >
+                                    {eventContent}
+                                  </a>
+                                ) : (
+                                  <Link
+                                    key={event.id}
+                                    href={eventUrl}
+                                    className={`block p-1 sm:p-1.5 rounded text-white hover:opacity-90 transition-all cursor-pointer group shadow-sm ${colorClass}`}
+                                  >
+                                    {eventContent}
                                   </Link>
                                 )
                               })}

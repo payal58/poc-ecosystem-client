@@ -50,11 +50,13 @@ export default function SupportPathwaysPage() {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true)
       const response = await pathwaysApi.query({ responses })
       router.push(`/support/results?data=${encodeURIComponent(JSON.stringify(response.data))}`)
     } catch (error) {
       console.error('Error submitting pathway query:', error)
       alert('Error getting recommendations. Please try again.')
+      setLoading(false)
     }
   }
 
@@ -163,15 +165,15 @@ export default function SupportPathwaysPage() {
           {isLastStep ? (
             <button
               onClick={handleSubmit}
-              disabled={!allAnswered}
+              disabled={!allAnswered || loading}
               className={`px-6 py-2 rounded-lg flex items-center ${
-                allAnswered
+                allAnswered && !loading
                   ? 'bg-primary-600 text-white hover:bg-primary-700'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
               }`}
             >
-              Get Recommendations
-              <ArrowRight className="h-4 w-4 ml-2" />
+              {loading ? 'Generating Recommendations...' : 'Get Recommendations'}
+              {!loading && <ArrowRight className="h-4 w-4 ml-2" />}
             </button>
           ) : (
             <button
