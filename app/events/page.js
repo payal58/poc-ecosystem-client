@@ -25,17 +25,53 @@ export default function EventsPage() {
     fetchEvents()
   }, [categoryFilter, audienceFilter])
 
+  // Also fetch events when month changes
+  useEffect(() => {
+    fetchEvents()
+  }, [currentMonth])
+
   const fetchEvents = async () => {
     try {
       setLoading(true)
       
-      // Fetch only external events
-      const response = await eventsApi.getExternal()
-      const externalData = response.data
-      let allEvents = externalData?.events || []
+      // Fetch database events
+      let databaseEvents = []
+      try {
+        const dbResponse = await eventsApi.getAll({
+          category: categoryFilter || undefined,
+          audience: audienceFilter || undefined,
+          search: searchTerm || undefined
+        })
+        databaseEvents = dbResponse.data || []
+        console.log('Database events count:', databaseEvents.length)
+      } catch (dbError) {
+        console.error('Error fetching database events:', dbError)
+      }
       
-      // Apply client-side filtering if needed
-      if (categoryFilter) {
+      // Fetch external events
+      let externalEvents = []
+      try {
+        const response = await eventsApi.getExternal()
+        console.log('External events API response:', response.data)
+        const externalData = response.data
+        externalEvents = externalData?.events || []
+        console.log('External events count:', externalEvents.length)
+        
+        // Check if there's an error message from the API
+        if (externalData?.error) {
+          console.warn('External API Error:', externalData.error)
+        }
+      } catch (extError) {
+        console.error('Error fetching external events:', extError)
+        // Continue even if external API fails
+      }
+      
+      // Combine database and external events
+      let allEvents = [...databaseEvents, ...externalEvents]
+      console.log('Total events count:', allEvents.length)
+      
+      // Apply client-side filtering if needed (for external events that weren't filtered server-side)
+      if (categoryFilter && !categoryFilter.includes(',')) {
         allEvents = allEvents.filter(event => 
           event.category && event.category.toLowerCase().includes(categoryFilter.toLowerCase())
         )
@@ -58,10 +94,9 @@ export default function EventsPage() {
       
       setEvents(allEvents)
       
-      // Extract unique categories and audiences from all external events (before filtering)
-      const allExternalEvents = externalData?.events || []
-      const uniqueCategories = [...new Set(allExternalEvents.map(e => e.category).filter(Boolean))]
-      const uniqueAudiences = [...new Set(allExternalEvents.flatMap(e => e.audience?.split(', ') || []).filter(Boolean))]
+      // Extract unique categories and audiences from all events (before filtering)
+      const uniqueCategories = [...new Set(allEvents.map(e => e.category).filter(Boolean))]
+      const uniqueAudiences = [...new Set(allEvents.flatMap(e => e.audience?.split(', ') || []).filter(Boolean))]
       setCategories(uniqueCategories)
       setAudiences(uniqueAudiences)
 
@@ -77,8 +112,15 @@ export default function EventsPage() {
         }
       }
     } catch (error) {
-      console.error('Error fetching external events:', error)
-      setEvents([])
+      console.error('Error fetching events:', error)
+      // Try to at least show database events if external fails
+      try {
+        const dbResponse = await eventsApi.getAll()
+        setEvents(dbResponse.data || [])
+      } catch (dbError) {
+        console.error('Error fetching database events as fallback:', dbError)
+        setEvents([])
+      }
       // Log failed search
       if (searchTerm) {
         try {
@@ -114,15 +156,44 @@ export default function EventsPage() {
   // Group events by date
   const eventsByDate = useMemo(() => {
     const grouped = {}
+    console.log('Grouping events by date. Total events:', events.length)
     events.forEach(event => {
-      const eventDate = new Date(event.start_date)
-      const dateKey = eventDate.toISOString().split('T')[0]
-      
-      if (!grouped[dateKey]) {
-        grouped[dateKey] = []
+      try {
+        // Handle both ISO format (2025-11-12T16:30:00) and date format (2025-11-12)
+        let eventDate
+        if (event.start_date) {
+          // Parse the date string - handle ISO format with or without timezone
+          const dateStr = event.start_date
+          // If it's in format "2025-11-12T16:30:00", parse it
+          eventDate = new Date(dateStr)
+          
+          // Check if date is valid
+          if (isNaN(eventDate.getTime())) {
+            console.warn('Invalid date for event:', event.id, event.start_date)
+            return
+          }
+        } else {
+          console.warn('Missing start_date for event:', event.id)
+          return
+        }
+        
+        // Use local date (YYYY-MM-DD) for grouping, not UTC
+        // This ensures events appear on the correct day regardless of timezone
+        const year = eventDate.getFullYear()
+        const month = String(eventDate.getMonth() + 1).padStart(2, '0')
+        const day = String(eventDate.getDate()).padStart(2, '0')
+        const dateKey = `${year}-${month}-${day}`
+        
+        if (!grouped[dateKey]) {
+          grouped[dateKey] = []
+        }
+        grouped[dateKey].push(event)
+      } catch (error) {
+        console.error('Error processing event date:', event.id, error, event)
       }
-      grouped[dateKey].push(event)
     })
+    console.log('Events grouped by date:', Object.keys(grouped).length, 'dates')
+    console.log('Date keys:', Object.keys(grouped).slice(0, 10))
     return grouped
   }, [events])
 
@@ -176,8 +247,19 @@ export default function EventsPage() {
   const calendarWeeks = useMemo(() => getCalendarWeeks(), [currentMonth])
 
   const getEventsForDate = (date) => {
-    const dateKey = date.toISOString().split('T')[0]
-    return eventsByDate[dateKey] || []
+    // Use local date (YYYY-MM-DD) for matching, not UTC
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const dateKey = `${year}-${month}-${day}`
+    const dayEvents = eventsByDate[dateKey] || []
+    
+    // Debug logging for today's date
+    if (isToday(date) && dayEvents.length > 0) {
+      console.log(`Found ${dayEvents.length} events for today (${dateKey}):`, dayEvents.map(e => e.title))
+    }
+    
+    return dayEvents
   }
 
   const isToday = (date) => {
@@ -410,11 +492,8 @@ export default function EventsPage() {
                                 ]
                                 const colorClass = colors[eventIndex % colors.length] || 'bg-gradient-to-r from-primary-500 to-primary-600'
                                 
-                                // Check if event is external
-                                const isExternal = event.external || event.id?.toString().startsWith('ext_')
-                                const eventUrl = isExternal 
-                                  ? (event.external_url || event.link || '#')
-                                  : `/events/${event.id}`
+                                // All events should link to original source (external URL)
+                                const eventUrl = event.external_url || event.link || '#'
                                 
                                 const eventContent = (
                                   <>
@@ -435,7 +514,8 @@ export default function EventsPage() {
                                   </>
                                 )
                                 
-                                return isExternal ? (
+                                // Always use external link, open in new tab
+                                return (
                                   <a
                                     key={event.id}
                                     href={eventUrl}
@@ -445,14 +525,6 @@ export default function EventsPage() {
                                   >
                                     {eventContent}
                                   </a>
-                                ) : (
-                                  <Link
-                                    key={event.id}
-                                    href={eventUrl}
-                                    className={`block p-1 sm:p-1.5 rounded text-white hover:opacity-90 transition-all cursor-pointer group shadow-sm ${colorClass}`}
-                                  >
-                                    {eventContent}
-                                  </Link>
                                 )
                               })}
                               {dayEvents.length > 3 && (

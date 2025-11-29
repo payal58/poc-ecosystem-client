@@ -97,32 +97,32 @@ export default function EditPathwayPage() {
 
   if (fetching) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p className="mt-4 text-gray-600">Loading pathway...</p>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div>
+          <p className="mt-4 text-neutral-600">Loading pathway...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-neutral-50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link
           href="/admin/pathways"
-          className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-6"
+          className="inline-flex items-center text-primary-800 hover:text-primary-700 mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Pathways
         </Link>
 
         <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Edit Pathway</h1>
+          <h1 className="text-3xl font-bold text-neutral-900 mb-6">Edit Pathway</h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 mb-2">
                 Question <span className="text-red-500">*</span>
               </label>
               <input
@@ -131,12 +131,12 @@ export default function EditPathwayPage() {
                 required
                 value={formData.question}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-800 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 mb-2">
                 Answer Options (JSON)
               </label>
               <textarea
@@ -144,12 +144,12 @@ export default function EditPathwayPage() {
                 rows={6}
                 value={formData.answer_options}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono text-sm"
+                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-800 focus:border-transparent font-mono text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 mb-2">
                 Recommended Resources (JSON)
               </label>
               <textarea
@@ -157,21 +157,21 @@ export default function EditPathwayPage() {
                 rows={8}
                 value={formData.recommended_resources}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono text-sm"
+                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-800 focus:border-transparent font-mono text-sm"
               />
             </div>
 
             <div className="flex justify-end gap-4">
               <Link
                 href="/admin/pathways"
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                className="px-6 py-2 border border-neutral-300 rounded-lg text-neutral-700 hover:bg-neutral-50"
               >
                 Cancel
               </Link>
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
+                className="inline-flex items-center px-6 py-2 bg-primary-800 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {loading ? 'Saving...' : 'Save Changes'}
@@ -183,6 +183,7 @@ export default function EditPathwayPage() {
     </div>
   )
 }
+
 
 
 

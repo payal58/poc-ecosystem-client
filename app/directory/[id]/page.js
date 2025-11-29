@@ -39,10 +39,10 @@ export default function OrganizationDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading organization...</p>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div>
+          <p className="mt-4 text-neutral-600 dark:text-neutral-300">Loading organization...</p>
         </div>
       </div>
     )
@@ -50,10 +50,10 @@ export default function OrganizationDetailPage() {
 
   if (!organization) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600 dark:text-gray-300 mb-4">Organization not found</p>
-          <Link href="/directory" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
+          <p className="text-neutral-600 dark:text-neutral-300 mb-4">Organization not found</p>
+          <Link href="/directory" className="text-primary-800 dark:text-primary-800 hover:text-primary-700 dark:hover:text-primary-300">
             Back to Directory
           </Link>
         </div>
@@ -62,22 +62,22 @@ export default function OrganizationDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <Link
           href="/directory"
-          className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 mb-6"
+          className="inline-flex items-center text-primary-800 dark:text-primary-800 hover:text-primary-700 dark:hover:text-primary-300 mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Directory
         </Link>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden">
           <div className="p-6 sm:p-8">
             <div className="mb-6">
               <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-3">
                     {organization.organization_name || 'Unnamed Organization'}
                   </h1>
                   <div className="flex flex-wrap gap-2 mb-3">
@@ -92,7 +92,7 @@ export default function OrganizationDetailPage() {
                       </span>
                     )}
                     {organization.province_state && (
-                      <span className="inline-block px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 rounded-full">
+                      <span className="inline-block px-3 py-1 text-sm bg-neutral-100 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-300 rounded-full">
                         {organization.province_state}
                       </span>
                     )}
@@ -103,10 +103,10 @@ export default function OrganizationDetailPage() {
 
             {organization.services_offered && (
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">
                   Services Offered
                 </h2>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+                <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed whitespace-pre-wrap">
                   {organization.services_offered}
                 </p>
               </div>
@@ -114,10 +114,10 @@ export default function OrganizationDetailPage() {
             
             {organization.notes && (
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">
                   Notes
                 </h2>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+                <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed whitespace-pre-wrap">
                   {organization.notes}
                 </p>
               </div>
@@ -126,56 +126,56 @@ export default function OrganizationDetailPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               {/* Business Information */}
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">
                   Business Information
                 </h2>
                 
                 {organization.address && (
                   <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <MapPin className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Address</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.address}</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Address</p>
+                      <p className="text-neutral-600 dark:text-neutral-300">{organization.address}</p>
                     </div>
                   </div>
                 )}
 
                 {organization.city && (
                   <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <MapPin className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">City</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.city}</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">City</p>
+                      <p className="text-neutral-600 dark:text-neutral-300">{organization.city}</p>
                     </div>
                   </div>
                 )}
 
                 {organization.province_state && (
                   <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <MapPin className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Province/State</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.province_state}</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Province/State</p>
+                      <p className="text-neutral-600 dark:text-neutral-300">{organization.province_state}</p>
                     </div>
                   </div>
                 )}
 
                 {organization.sector_type && (
                   <div className="flex items-start">
-                    <Briefcase className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <Briefcase className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Sector Type</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.sector_type}</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Sector Type</p>
+                      <p className="text-neutral-600 dark:text-neutral-300">{organization.sector_type}</p>
                     </div>
                   </div>
                 )}
 
                 {(organization.latitude && organization.longitude) && (
                   <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <MapPin className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Coordinates</p>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Coordinates</p>
+                      <p className="text-neutral-600 dark:text-neutral-300">
                         {organization.latitude}, {organization.longitude}
                       </p>
                     </div>
@@ -185,18 +185,18 @@ export default function OrganizationDetailPage() {
 
               {/* Contact Information */}
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">
                   Contact Information
                 </h2>
 
                 {organization.email_address && (
                   <div className="flex items-start">
-                    <Mail className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <Mail className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Email</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Email</p>
                       <a
                         href={`mailto:${organization.email_address}`}
-                        className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
+                        className="text-primary-800 dark:text-primary-800 hover:text-primary-700 dark:hover:text-primary-300"
                       >
                         {organization.email_address}
                       </a>
@@ -206,22 +206,22 @@ export default function OrganizationDetailPage() {
 
                 {organization.contact_name && (
                   <div className="flex items-start">
-                    <Mail className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <Mail className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Contact Name</p>
-                      <p className="text-gray-600 dark:text-gray-300">{organization.contact_name}</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Contact Name</p>
+                      <p className="text-neutral-600 dark:text-neutral-300">{organization.contact_name}</p>
                     </div>
                   </div>
                 )}
 
                 {organization.phone_number && (
                   <div className="flex items-start">
-                    <Phone className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <Phone className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Phone</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Phone</p>
                       <a
                         href={`tel:${organization.phone_number}`}
-                        className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
+                        className="text-primary-800 dark:text-primary-800 hover:text-primary-700 dark:hover:text-primary-300"
                       >
                         {organization.phone_number}
                       </a>
@@ -231,14 +231,14 @@ export default function OrganizationDetailPage() {
 
                 {organization.website && (
                   <div className="flex items-start">
-                    <Globe className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <Globe className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white mb-1">Website</p>
+                      <p className="font-medium text-neutral-900 dark:text-white mb-1">Website</p>
                       <a
                         href={organization.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 inline-flex items-center"
+                        className="text-primary-800 dark:text-primary-800 hover:text-primary-700 dark:hover:text-primary-300 inline-flex items-center"
                       >
                         {organization.website}
                         <ExternalLink className="h-3 w-3 ml-1" />
@@ -252,10 +252,10 @@ export default function OrganizationDetailPage() {
             {/* Map Section */}
             {organization.latitude && organization.longitude && (
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">
                   Location
                 </h2>
-                <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700" style={{ height: '400px' }}>
+                <div className="rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700" style={{ height: '400px' }}>
                   <Map
                     latitude={parseFloat(organization.latitude)}
                     longitude={parseFloat(organization.longitude)}
@@ -272,7 +272,7 @@ export default function OrganizationDetailPage() {
                   href={organization.external_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                  className="inline-flex items-center px-6 py-3 bg-primary-800 text-white rounded-lg hover:bg-primary-700 transition-colors"
                 >
                   View on Source Website
                   <ExternalLink className="h-4 w-4 ml-2" />

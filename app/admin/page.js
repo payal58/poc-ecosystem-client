@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Calendar, Building2, Compass, BarChart3, Plus } from 'lucide-react'
+import { Calendar, Building2, Compass, BarChart3, BookOpen } from 'lucide-react'
 
 export default function AdminDashboard() {
   const adminSections = [
@@ -20,6 +20,13 @@ export default function AdminDashboard() {
       color: 'bg-green-500',
     },
     {
+      title: 'Programs',
+      description: 'Manage programs, accelerators, and support services',
+      href: '/admin/programs',
+      icon: BookOpen,
+      color: 'bg-indigo-500',
+    },
+    {
       title: 'Pathways',
       description: 'Manage support pathway questions and recommendations',
       href: '/admin/pathways',
@@ -36,11 +43,11 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Admin Dashboard</h1>
-          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-2">Admin Dashboard</h1>
+          <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base">
             Manage content and view insights for the Innovation Zone Ecosystem Platform
           </p>
         </div>
@@ -52,15 +59,15 @@ export default function AdminDashboard() {
               <Link
                 key={section.href}
                 href={section.href}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 hover:shadow-lg transition-shadow"
+                className="bg-white dark:bg-neutral-800 rounded-lg shadow-md p-4 sm:p-6 hover:shadow-lg transition-shadow"
               >
                 <div className={`${section.color} w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4`}>
                   <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                <h2 className="text-lg sm:text-xl font-semibold text-neutral-900 dark:text-white mb-2">
                   {section.title}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                <p className="text-neutral-600 dark:text-neutral-300 text-sm">
                   {section.description}
                 </p>
               </Link>

@@ -46,10 +46,10 @@ export default function EventDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p className="mt-4 text-gray-600">Loading event...</p>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div>
+          <p className="mt-4 text-neutral-600">Loading event...</p>
         </div>
       </div>
     )
@@ -57,10 +57,10 @@ export default function EventDetailPage() {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">Event not found</p>
-          <Link href="/events" className="text-primary-600 hover:text-primary-700">
+          <p className="text-neutral-600 mb-4">Event not found</p>
+          <Link href="/events" className="text-primary-800 hover:text-primary-700">
             Back to Events
           </Link>
         </div>
@@ -69,11 +69,11 @@ export default function EventDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-neutral-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link
           href="/events"
-          className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-6"
+          className="inline-flex items-center text-primary-800 hover:text-primary-700 mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Events
@@ -82,7 +82,7 @@ export default function EventDetailPage() {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="p-8">
             <div className="mb-6">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+              <h1 className="text-3xl font-bold text-neutral-900 mb-4">
                 {event.title}
               </h1>
               {event.category && (
@@ -94,10 +94,10 @@ export default function EventDetailPage() {
 
             <div className="space-y-4 mb-6">
               <div className="flex items-start">
-                <Calendar className="h-5 w-5 text-gray-500 mr-3 mt-0.5" />
+                <Calendar className="h-5 w-5 text-neutral-500 mr-3 mt-0.5" />
                 <div>
-                  <p className="font-medium text-gray-900">Date</p>
-                  <p className="text-gray-600">
+                  <p className="font-medium text-neutral-900">Date</p>
+                  <p className="text-neutral-600">
                     {formatDate(event.start_date)}
                     {event.end_date && event.end_date !== event.start_date && (
                       <span> - {formatDate(event.end_date)}</span>
@@ -107,19 +107,19 @@ export default function EventDetailPage() {
               </div>
 
               <div className="flex items-start">
-                <MapPin className="h-5 w-5 text-gray-500 mr-3 mt-0.5" />
+                <MapPin className="h-5 w-5 text-neutral-500 mr-3 mt-0.5" />
                 <div>
-                  <p className="font-medium text-gray-900">Location</p>
-                  <p className="text-gray-600">{event.location}</p>
+                  <p className="font-medium text-neutral-900">Location</p>
+                  <p className="text-neutral-600">{event.location}</p>
                 </div>
               </div>
 
               {event.audience && (
                 <div className="flex items-start">
-                  <Clock className="h-5 w-5 text-gray-500 mr-3 mt-0.5" />
+                  <Clock className="h-5 w-5 text-neutral-500 mr-3 mt-0.5" />
                   <div>
-                    <p className="font-medium text-gray-900">Audience</p>
-                    <p className="text-gray-600">{event.audience}</p>
+                    <p className="font-medium text-neutral-900">Audience</p>
+                    <p className="text-neutral-600">{event.audience}</p>
                   </div>
                 </div>
               )}
@@ -127,22 +127,22 @@ export default function EventDetailPage() {
 
             {event.description && (
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                <h2 className="text-xl font-semibold text-neutral-900 mb-3">
                   Description
                 </h2>
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                <p className="text-neutral-700 leading-relaxed whitespace-pre-wrap">
                   {event.description}
                 </p>
               </div>
             )}
 
             {event.link && (
-              <div className="pt-6 border-t border-gray-200">
+              <div className="pt-6 border-t border-neutral-200">
                 <a
                   href={event.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                  className="inline-flex items-center px-6 py-3 bg-primary-800 text-white rounded-lg hover:bg-primary-700 transition-colors"
                 >
                   Visit Event Website
                   <ExternalLink className="h-4 w-4 ml-2" />
@@ -155,6 +155,7 @@ export default function EventDetailPage() {
     </div>
   )
 }
+
 
 
 

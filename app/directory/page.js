@@ -99,7 +99,7 @@ export default function DirectoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-google-gray-50 dark:bg-google-gray-900">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
@@ -107,32 +107,32 @@ export default function DirectoryPage() {
           transition={{ duration: 0.4 }}
           className="mb-8 sm:mb-10"
         >
-          <h1 className="text-3xl sm:text-4xl font-medium text-google-gray-900 dark:text-google-gray-200 mb-6 tracking-tight">Ecosystem Directory</h1>
+          <h1 className="text-3xl sm:text-4xl font-medium text-neutral-900 dark:text-neutral-200 mb-6 tracking-tight">Ecosystem Directory</h1>
           
           {/* Search and Filters */}
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-white dark:bg-google-gray-800 border border-google-gray-300 dark:border-google-gray-700 rounded-lg p-4 sm:p-6 mb-8 shadow-sm"
+            className="bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg p-4 sm:p-6 mb-8 shadow-sm"
           >
             <form onSubmit={handleSearch} className="mb-4">
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-google-gray-500 h-5 w-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 h-5 w-5" />
                   <input
                     type="text"
                     placeholder="Search organizations..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-google-gray-300 dark:border-google-gray-700 rounded-lg focus:ring-2 focus:ring-google-blue focus:border-google-blue bg-white dark:bg-google-gray-800 text-google-gray-900 dark:text-google-gray-200 placeholder-google-gray-500 dark:placeholder-google-gray-500 transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-primary-800 focus:border-primary-800 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-200 placeholder-neutral-500 dark:placeholder-neutral-500 transition-all"
                   />
                 </div>
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-4 sm:px-6 py-2.5 bg-google-blue text-white rounded-lg hover:bg-primary-600 transition-colors font-medium text-sm shadow-sm hover:shadow-md"
+                  className="px-4 sm:px-6 py-2.5 bg-primary-800 text-white rounded-lg hover:bg-primary-800 transition-colors font-medium text-sm shadow-sm hover:shadow-md"
                 >
                   Search
                 </motion.button>
@@ -141,11 +141,11 @@ export default function DirectoryPage() {
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <div className="flex items-center gap-2 flex-1">
-                <Filter className="h-5 w-5 text-google-gray-600 dark:text-google-gray-400" />
+                <Filter className="h-5 w-5 text-neutral-600 dark:text-neutral-400" />
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="flex-1 px-3 sm:px-4 py-2.5 border border-google-gray-300 dark:border-google-gray-700 rounded-lg focus:ring-2 focus:ring-google-blue focus:border-google-blue bg-white dark:bg-google-gray-800 text-google-gray-900 dark:text-google-gray-200 transition-all"
+                  className="flex-1 px-3 sm:px-4 py-2.5 border border-neutral-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-primary-800 focus:border-primary-800 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-200 transition-all"
                 >
                   <option value="">All Sectors</option>
                   {categories.map((cat) => (
@@ -154,11 +154,11 @@ export default function DirectoryPage() {
                 </select>
               </div>
               <div className="flex items-center gap-2 flex-1">
-                <Filter className="h-5 w-5 text-google-gray-600 dark:text-google-gray-400" />
+                <Filter className="h-5 w-5 text-neutral-600 dark:text-neutral-400" />
                 <select
                   value={cityFilter}
                   onChange={(e) => setCityFilter(e.target.value)}
-                  className="flex-1 px-3 sm:px-4 py-2.5 border border-google-gray-300 dark:border-google-gray-700 rounded-lg focus:ring-2 focus:ring-google-blue focus:border-google-blue bg-white dark:bg-google-gray-800 text-google-gray-900 dark:text-google-gray-200 transition-all"
+                  className="flex-1 px-3 sm:px-4 py-2.5 border border-neutral-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-primary-800 focus:border-primary-800 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-200 transition-all"
                 >
                   <option value="">All Cities</option>
                   {cities.map((city) => (
@@ -172,7 +172,7 @@ export default function DirectoryPage() {
                     setCategoryFilter('')
                     setCityFilter('')
                   }}
-                  className="px-4 py-2 text-google-blue hover:text-primary-600 dark:text-google-blue dark:hover:text-primary-400 text-sm whitespace-nowrap font-medium"
+                  className="px-4 py-2 text-primary-800 hover:text-primary-800 dark:text-primary-800 dark:hover:text-primary-800 text-sm whitespace-nowrap font-medium"
                 >
                   Clear Filters
                 </button>
@@ -191,8 +191,8 @@ export default function DirectoryPage() {
               exit={{ opacity: 0 }}
               className="text-center py-16"
             >
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-google-gray-300 dark:border-google-gray-700 border-t-google-blue"></div>
-              <p className="mt-4 text-google-gray-600 dark:text-google-gray-400">Loading organizations...</p>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-neutral-300 dark:border-neutral-700 border-t-primary-800"></div>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-400">Loading organizations...</p>
             </motion.div>
           ) : organizations.length === 0 ? (
             <motion.div
@@ -200,10 +200,10 @@ export default function DirectoryPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="text-center py-16 bg-white dark:bg-google-gray-800 border border-google-gray-300 dark:border-google-gray-700 rounded-lg"
+              className="text-center py-16 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg"
             >
-              <Building2 className="h-12 w-12 text-google-gray-400 dark:text-google-gray-600 mx-auto mb-4" />
-              <p className="text-google-gray-600 dark:text-google-gray-400">No organizations found. Try adjusting your search.</p>
+              <Building2 className="h-12 w-12 text-neutral-400 dark:text-neutral-600 mx-auto mb-4" />
+              <p className="text-neutral-600 dark:text-neutral-400">No organizations found. Try adjusting your search.</p>
             </motion.div>
           ) : (
             <motion.div
@@ -224,20 +224,20 @@ export default function DirectoryPage() {
                   className="group"
                 >
                   <Link href={`/directory/${org.id}`}>
-                    <div className="h-full bg-white dark:bg-google-gray-800 border border-google-gray-300 dark:border-google-gray-700 rounded-lg p-5 hover:border-google-blue hover:shadow-md dark:hover:border-google-blue transition-all duration-200 cursor-pointer hover:bg-google-gray-50 dark:hover:bg-google-gray-700">
+                    <div className="h-full bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg p-5 hover:border-primary-800 hover:shadow-md dark:hover:border-primary-800 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-700">
                       {/* Header */}
                       <div className="mb-4">
-                        <h3 className="text-base font-medium text-google-gray-900 dark:text-google-gray-200 mb-3 line-clamp-2 group-hover:text-google-blue transition-colors">
+                        <h3 className="text-base font-medium text-neutral-900 dark:text-neutral-200 mb-3 line-clamp-2 group-hover:text-primary-800 transition-colors">
                           {org.organization_name || 'Unnamed Organization'}
                         </h3>
                         <div className="flex flex-wrap gap-1.5">
                           {org.sector_type && (
-                            <span className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-google-gray-100 dark:bg-google-gray-700 text-google-gray-700 dark:text-google-gray-300 rounded-full">
+                            <span className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-full">
                               {org.sector_type}
                             </span>
                           )}
                           {org.city && (
-                            <span className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-google-gray-100 dark:bg-google-gray-700 text-google-gray-700 dark:text-google-gray-300 rounded-full">
+                            <span className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-full">
                               {org.city}
                             </span>
                           )}
@@ -246,7 +246,7 @@ export default function DirectoryPage() {
                       
                       {/* Description */}
                       {org.services_offered && (
-                        <p className="text-sm text-google-gray-700 dark:text-google-gray-300 mb-4 line-clamp-2 leading-relaxed">
+                        <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4 line-clamp-2 leading-relaxed">
                           {org.services_offered}
                         </p>
                       )}
@@ -254,32 +254,32 @@ export default function DirectoryPage() {
                       {/* Details */}
                       <div className="space-y-2 mb-4">
                         {org.address && (
-                          <div className="flex items-start text-xs text-google-gray-600 dark:text-google-gray-400">
-                            <MapPin className="h-3.5 w-3.5 mr-2 mt-0.5 flex-shrink-0 text-google-gray-500" />
+                          <div className="flex items-start text-xs text-neutral-600 dark:text-neutral-400">
+                            <MapPin className="h-3.5 w-3.5 mr-2 mt-0.5 flex-shrink-0 text-neutral-500" />
                             <span className="line-clamp-1">{org.address}</span>
                           </div>
                         )}
                         {org.phone_number && (
-                          <div className="flex items-center text-xs text-google-gray-600 dark:text-google-gray-400">
-                            <Phone className="h-3.5 w-3.5 mr-2 flex-shrink-0 text-google-gray-500" />
+                          <div className="flex items-center text-xs text-neutral-600 dark:text-neutral-400">
+                            <Phone className="h-3.5 w-3.5 mr-2 flex-shrink-0 text-neutral-500" />
                             <span>{org.phone_number}</span>
                           </div>
                         )}
                         {org.email_address && (
-                          <div className="flex items-center text-xs text-google-gray-600 dark:text-google-gray-400">
-                            <Mail className="h-3.5 w-3.5 mr-2 flex-shrink-0 text-google-gray-500" />
+                          <div className="flex items-center text-xs text-neutral-600 dark:text-neutral-400">
+                            <Mail className="h-3.5 w-3.5 mr-2 flex-shrink-0 text-neutral-500" />
                             <span className="line-clamp-1">{org.email_address}</span>
                           </div>
                         )}
                       </div>
 
                       {/* Footer */}
-                      <div className="pt-3 border-t border-google-gray-200 dark:border-google-gray-700 flex items-center justify-between">
-                        <span className="text-xs text-google-gray-500 dark:text-google-gray-500 group-hover:text-google-blue transition-colors font-medium">
+                      <div className="pt-3 border-t border-neutral-200 dark:border-neutral-700 flex items-center justify-between">
+                        <span className="text-xs text-neutral-500 dark:text-neutral-500 group-hover:text-primary-800 transition-colors font-medium">
                           View details →
                         </span>
                         {org.website && (
-                          <Globe className="h-3.5 w-3.5 text-google-gray-400 dark:text-google-gray-600 group-hover:text-google-blue transition-colors" />
+                          <Globe className="h-3.5 w-3.5 text-neutral-400 dark:text-neutral-600 group-hover:text-primary-800 transition-colors" />
                         )}
                       </div>
                     </div>

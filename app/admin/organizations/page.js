@@ -42,22 +42,22 @@ export default function AdminOrganizationsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="w-full sm:w-auto">
             <Link
               href="/admin"
-              className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-2 sm:mb-4"
+              className="inline-flex items-center text-primary-800 hover:text-primary-700 mb-2 sm:mb-4"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Admin
             </Link>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Manage Organizations</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white">Manage Organizations</h1>
           </div>
           <Link
             href="/admin/organizations/new"
-            className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors w-full sm:w-auto justify-center"
+            className="inline-flex items-center px-4 py-2 bg-primary-800 text-white rounded-lg hover:bg-primary-700 transition-colors w-full sm:w-auto justify-center"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Organization
@@ -66,37 +66,37 @@ export default function AdminOrganizationsPage() {
 
         {loading ? (
           <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-            <p className="mt-4 text-gray-600">Loading organizations...</p>
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div>
+            <p className="mt-4 text-neutral-600">Loading organizations...</p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-900">
+                <thead className="bg-neutral-50 dark:bg-neutral-900">
                   <tr>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                       Organization Name
                     </th>
-                    <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                       Sector Type
                     </th>
-                    <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                       City
                     </th>
-                    <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                       Email
                     </th>
-                    <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                <tbody className="bg-white dark:bg-neutral-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {organizations.map((org) => (
-                    <tr key={org.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <tr key={org.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-700">
                       <td className="px-3 sm:px-6 py-4">
-                        <div className="text-sm font-medium text-gray-900 dark:text-white">
+                        <div className="text-sm font-medium text-neutral-900 dark:text-white">
                           {org.organization_name || 'Unnamed Organization'}
                         </div>
                         <div className="sm:hidden mt-1">
@@ -106,12 +106,12 @@ export default function AdminOrganizationsPage() {
                             </span>
                           )}
                           {org.city && (
-                            <span className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full mr-2">
+                            <span className="inline-block px-2 py-1 text-xs bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-full mr-2">
                               {org.city}
                             </span>
                           )}
                           {org.email_address && (
-                            <span className="text-xs text-gray-600 dark:text-gray-400 block mt-1">
+                            <span className="text-xs text-neutral-600 dark:text-neutral-400 block mt-1">
                               {org.email_address}
                             </span>
                           )}
@@ -123,20 +123,20 @@ export default function AdminOrganizationsPage() {
                             {org.sector_type}
                           </span>
                         ) : (
-                          <span className="text-xs text-gray-400 dark:text-gray-500">-</span>
+                          <span className="text-xs text-neutral-400 dark:text-neutral-500">-</span>
                         )}
                       </td>
-                      <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                      <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-neutral-600 dark:text-neutral-300">
                         {org.city || '-'}
                       </td>
-                      <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                      <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-neutral-600 dark:text-neutral-300">
                         {org.email_address || '-'}
                       </td>
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end gap-2">
                           <Link
                             href={`/admin/organizations/${org.id}/edit`}
-                            className="text-primary-600 dark:text-primary-400 hover:text-primary-900 dark:hover:text-primary-300"
+                            className="text-primary-800 dark:text-primary-800 hover:text-primary-900 dark:hover:text-primary-300"
                           >
                             <Edit className="h-4 w-4" />
                           </Link>
@@ -155,8 +155,8 @@ export default function AdminOrganizationsPage() {
             </div>
             {organizations.length === 0 && (
               <div className="text-center py-12">
-                <Building2 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">No organizations found. Create your first organization!</p>
+                <Building2 className="h-12 w-12 text-neutral-400 mx-auto mb-4" />
+                <p className="text-neutral-600">No organizations found. Create your first organization!</p>
               </div>
             )}
           </div>
